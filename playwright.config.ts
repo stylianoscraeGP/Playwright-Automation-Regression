@@ -1,19 +1,20 @@
 import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
+  testDir: './RegressionAutomation',  // your test folder
   projects: [
-   // {
-     // name: 'chromium',
-     // use: { ...devices['Desktop Chrome'] },
-    //},
     {
       name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
+      use: { ...devices['Desktop Firefox'] },  // run tests only on Firefox
     },
-    // You can add WebKit if needed
-    // {
-    //   name: 'webkit',
-    //   use: { ...devices['Desktop Safari'] },
-    // },
   ],
+  reporter: [['list'], ['html']],
+  use: {
+    headless: false,
+    screenshot: 'on',
+    video: 'on',
+    launchOptions:{
+      devtools: true,  // enable devtools for debugging
+    }
+  },
 });
