@@ -127,22 +127,11 @@ const fillValidDataSignUpStep1 = async (page,country ,bonusType?:string) => {
     await expect(emailInput).toHaveValue(Data.email, { timeout: 3000 });
     await page.waitForTimeout(400); // small wait for UI
     console.log(`Generated email: ${Data.email}`);
-   
 
-    // Append email to file instead of overwriting
-    const emailFile = './environments/generatedUsersCredentials.json';
-    let emails: any[] = [];
-    try {
-        const parsed = JSON.parse(fs.readFileSync(emailFile, 'utf-8'));
-        if (Array.isArray(parsed)) {
-            emails = parsed;
-        } else if (parsed && typeof parsed === 'object') {
-            emails = [parsed];
-        }
-    } catch (e) { }
-    emails.push({ email: Data.email });
-    fs.writeFileSync(emailFile, JSON.stringify(emails, null, 2));
-
+    //add email in json file
+   const userEmail = Data.email.toString();
+   const filePath = './environments/generatedEmail.json';
+   fs.writeFileSync(filePath, JSON.stringify({ email: userEmail }, null, 2));
 
 
     //fill password
@@ -152,19 +141,11 @@ const fillValidDataSignUpStep1 = async (page,country ,bonusType?:string) => {
     await page.waitForTimeout(400); // small wait for UI
     console.log(`Generated email: ${Data.password}`);
 
-    // Append password to file instead of overwriting
-    const passFile = './environments/generatedUsersCredentials.json';
-    let passwords: any[] = [];
-    try {
-        const parsed = JSON.parse(fs.readFileSync(passFile, 'utf-8'));
-        if (Array.isArray(parsed)) {
-            passwords = parsed;
-        } else if (parsed && typeof parsed === 'object') {
-            passwords = [parsed];
-        }
-    } catch (e) { }
-    passwords.push({ password: Data.password });
-    fs.writeFileSync(passFile, JSON.stringify(passwords, null, 2));
+    //add password in fixutre file
+    //add email in json file
+    const userPassword = Data.password.toString();
+    const filePathP = './environments/generatedPassword.json';
+    fs.writeFileSync(filePathP, JSON.stringify({ password: userPassword }, null, 2));
 
 
     //check currency and country
@@ -353,7 +334,6 @@ const fillInvalidDataSignUpStep2 = async (page, country) => {
     await section.getByRole('textbox', { name: 'Last name' }).type('Marinos');
 
     //fill phone  //fill postal code
-    page.pause();
     setPhoneOrPostalCode(section, country); // or 'Belgium' based on your test case
 
 
