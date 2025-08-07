@@ -34,7 +34,7 @@ export default defineConfig({
   ],
   reporter: [['list'], ['html']],
   use: {
-    headless: false,
+    headless: true,
     screenshot: 'on',
     video: 'on',
     launchOptions:{
