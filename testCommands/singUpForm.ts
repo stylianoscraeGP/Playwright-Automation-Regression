@@ -35,6 +35,11 @@ const setCountry = async (section, country) => {
             await section.getByLabel('Country', { exact: true }).selectOption('3');
             await expect(section.getByLabel('Country', { exact: true })).toHaveText(/Belgium/);
             break;
+        case 'Finland':
+            await expect(section.getByLabel('Country', { exact: true })).toBeVisible();
+            await section.getByLabel('Country', { exact: true }).selectOption('7');
+            await expect(section.getByLabel('Country', { exact: true })).toHaveText(/Finland/);
+            break;      
     }
 }
 //helper command to set postal code or phonenumber based on country
@@ -49,7 +54,11 @@ const setPhoneOrPostalCode = async (section, country) => {
             await section.getByRole('textbox', { name: 'Postal code' }).type('1000');
             break;
         default:
-            throw new Error(`Unknown country: ${country}`);
+            await section.getByRole('textbox', { name: 'Phone' }).type('41' + faker.string.numeric(8));
+             await section.getByRole('textbox', { name: 'Postal code' }).not.toBeVisible();
+            // No Postal Code needed for this country
+            console.log('No Postal Code needed for this country');
+            break;
     }
 }
 
@@ -296,7 +305,7 @@ const fillValidDataSignUpStep2 = async (page, country) => {
 
     //fill phone  //fill postal code
 
-    setPhoneOrPostalCode(section, country); // or 'Belgium' based on your test case
+    setPhoneOrPostalCode(section, country);
 
 
     //select day, month and year for date of birth
