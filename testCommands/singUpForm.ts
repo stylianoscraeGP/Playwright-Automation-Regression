@@ -55,7 +55,7 @@ const setPhoneOrPostalCode = async (section, country) => {
             break;
         default:
             await section.getByRole('textbox', { name: 'Phone' }).type('41' + faker.string.numeric(8));
-             await section.getByRole('textbox', { name: 'Postal code' }).not.toBeVisible();
+             await section.getByRole('textbox', { name: 'Postal code' }).toHaveCount(0);
             // No Postal Code needed for this country
             console.log('No Postal Code needed for this country');
             break;
