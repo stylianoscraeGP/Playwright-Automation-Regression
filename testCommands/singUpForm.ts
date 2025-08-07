@@ -53,6 +53,10 @@ const setPhoneOrPostalCode = async (section, country) => {
             await section.getByRole('textbox', { name: 'Phone' }).type('470' + faker.string.numeric(6));
             await section.getByRole('textbox', { name: 'Postal code' }).type('1000');
             break;
+        case 'Finland':
+            await section.getByRole('textbox', { name: 'Phone' }).type('470' + faker.string.numeric(6));
+            await section.getByRole('textbox', { name: 'Postal code' }).type('100000');
+            break;
         default:
             await section.getByRole('textbox', { name: 'Phone' }).type('41' + faker.string.numeric(8));
             // No Postal Code needed for this country
